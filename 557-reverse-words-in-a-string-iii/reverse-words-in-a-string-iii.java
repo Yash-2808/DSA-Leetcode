@@ -6,7 +6,7 @@ class Solution {
             StringBuilder rev=new StringBuilder(ch).reverse();
             result.append(rev).append(" ");
         }
-        result.deleteCharAt(result.length()-1);
-        return result.toString();
+        //result.deleteCharAt(result.length()-1);
+        return result.toString().trim();
     }
 }
