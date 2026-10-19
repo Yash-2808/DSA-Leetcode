@@ -1,32 +1,35 @@
+
+import java.util.*;
+
 class Solution {
     public int[] topKFrequent(int[] nums, int k) {
-        List<Integer> [] li=new List[nums.length+1];
-        HashMap<Integer,Integer> map=new HashMap<>();
+        Map<Integer, Integer> map = new HashMap<>();
 
-        for(int num:nums){
-            map.put(num,map.getOrDefault(num,0)+1);
-        }
-        for(Map.Entry<Integer,Integer> e:map.entrySet()){
-            int num=e.getKey();
-            int frequency=e.getValue();
-            if(li[frequency]==null){
-                li[frequency]=new ArrayList<>();
-            }
-            li[frequency].add(num);
-        }
-        int res[]=new int[k];
-        int count=0;
-        for(int i=li.length-1;i>=0 && count<k;i--){
-            if(li[i]!=null){
-                for(int num:li[i]){
-                    res[count++]=num;
 
-                    if(count==k){
-                        break;
-                    }
-                }
+        for (int num : nums) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+
+    
+        PriorityQueue<Integer> pq = new PriorityQueue<>(
+            (a, b) -> Integer.compare(map.get(a), map.get(b))
+        );
+
+     
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            pq.offer(entry.getKey());
+
+            if (pq.size() > k) {
+                pq.poll();
             }
         }
-        return res;
+
+        int[] result = new int[k];
+
+        for (int i = 0; i < k; i++) {
+            result[i] = pq.poll();
+        }
+
+        return result;
     }
 }
